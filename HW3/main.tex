@@ -1,0 +1,478 @@
+\documentclass{exam}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[main=english, vietnamese]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tasks}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+
+\tikzstyle{level 1}=[level distance=5cm, sibling distance=4cm]
+\tikzstyle{level 2}=[level distance=5cm, sibling distance=4cm]
+\tikzstyle{level 2}=[level distance=5cm, sibling distance=4cm]
+\tikzstyle{end} = [circle, minimum width=5pt,fill, inner sep=0pt]
+
+\definecolor{borderblue}{HTML}{33c2ff}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newbox\mizukibox
+\setbox\mizukibox\hbox{
+\raisebox{-2.5pt}{\includegraphics[height=2.5ex]{mizuki.png}}}
+\def\mizuki{\copy\mizukibox}
+
+\renewcommand\qedsymbol{$\mizuki$}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\curly}[1]{\left\{#1\right\}}
+\newcommand{\lxor}{\oplus}
+\newcommand{\Mid}{\;\middle|\;}
+
+\allowdisplaybreaks
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\makeatletter
+\long\def\paragraph{%
+  \@startsection{paragraph}{4}%
+  {\z@}{2ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\makeatletter
+\def\@xequals@fill{\arrowfill@\Relbar\Relbar\Relbar}
+\newcommand*\xequals[2][]{\DOTSB\ext@arrow0055\@xequals@fill{#1}{#2}}
+\makeatother
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\HGeom}{HGeom}
+\DeclareMathOperator{\NegBin}{NegBin}
+\DeclareMathOperator{\Pois}{Pois}
+
+\NewTColorBox{problem}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\title{STAT451 - Homework 3}
+\author{\foreignlanguage{vietnamese}{Trần Tôn Minh Kỳ}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}{94}
+	Consider a deck consisting of seven cards, marked $1, 2, \dots, 7$. Three of these cards are selected at random. Define an rv $W$ by $W = \text{the sum of the resulting numbers}$, and compute the pmf of $W$. Then compute $\mu$ and $\sigma^2$.
+\end{problem}
+
+We can list out every possible combination of the selected cards as follows:
+\begin{center}
+	\begin{tabular}{ccccccc}
+		1 2 3 & 1 3 4 & 1 4 6 & 2 3 4 & 2 4 6 & 3 4 5 & 3 6 7 \\
+		1 2 4 & 1 3 5 & 1 4 7 & 2 3 5 & 2 4 7 & 3 4 6 & 4 5 6 \\
+		1 2 5 & 1 3 6 & 1 5 6 & 2 3 6 & 2 5 6 & 3 4 7 & 4 5 7 \\
+		1 2 6 & 1 3 7 & 1 5 7 & 2 3 7 & 2 5 7 & 3 5 6 & 4 6 7 \\
+		1 2 7 & 1 4 5 & 1 6 7 & 2 4 5 & 2 6 7 & 3 5 7 & 5 6 7
+	\end{tabular}
+\end{center}
+Grouping these combinations by their sum, we obtain
+\begin{center}
+	\begin{tabular}{ccccccccccccc}
+		6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 \\
+		\hline
+		1 2 3 & 1 2 4 & 1 2 5 & 1 2 6 & 1 2 7 & 1 3 7 & 1 4 7 & 1 5 7 & 1 6 7 & 2 6 7 & 3 6 7 & 4 6 7 & 5 6 7 \\
+		{} & {} & 1 3 4 & 1 3 5 & 1 3 6 & 1 4 6 & 1 5 6 & 2 4 7 & 2 5 7 & 3 5 7 & 4 5 7 \\
+		{} & {} & {} & 2 3 4 & 1 4 5 & 2 3 6 & 2 3 7 & 2 5 6 & 3 4 7 & 4 5 6 \\
+		{} & {} & {} & {} & 2 3 5 & 2 4 5 & 2 4 6 & 3 4 6 & 3 5 6 \\
+		{} & {} & {} & {} & {} & {} & 3 4 5
+	\end{tabular}
+\end{center}
+The pmf of $W$ is thus
+\[
+	p(x) = \begin{cases}
+		\frac1{35} \approx .0286 & \text{if } x \in \{6, 7, 17, 18\} \\
+		\frac2{35} \approx .0571 & \text{if } x \in \{8, 16\} \\
+		\frac3{35} \approx .0857 & \text{if } x \in \{9, 15\} \\
+		\frac4{35} \approx .1143 & \text{if } x \in \{10, 11, 13, 14\} \\
+		\frac5{35} \approx .1429 & \text{if } x = 12
+	\end{cases}.
+\]
+From the pmf of $W$, one can calculate the expected value of $W$
+\[
+	\mathbb E[W] = \sum_{x \in D} xp(x) = 12
+\]
+as well as the variance
+\[
+	\Var(W) = \mathbb E[W^2] - \mathbb E[W]^2 = 152 - 144 = 8.
+\]
+
+\begin{problem}{95}
+	After shuffling a deck of 52 cards, a dealer deals out 5. Let $X =$ the number of suits represented in the five-card hand.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Show that the pmf of $X$ is
+		\begin{center}
+			\bgroup
+			\def\arraystretch{1.5}
+			\begin{tabular}{c|cccc}
+				$x$ & 1 & 2 & 3 & 4 \\
+				\hline
+				$p(x)$ & .002 & .146 & .588 & .264
+			\end{tabular}
+			\egroup
+		\end{center}
+		\task Compute $\mu$, $\sigma^2$, and $\sigma$
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.}
+\begin{proof}
+	Denote by $p$ the pmf of $X$. We first calculate $p(1)$, which is the probability the hand only consists of one suit. By calculating the probability for the hand to only contain spades, we can repeat this argument for all other suits. Since a 52-card deck has 13 cards of each suit, we obtain
+	\[
+		p(1) = 4P(\text{hand only contains spades}) = 4 \times \frac{\binom{13}5}{\binom{52}5} \approx .002.
+	\]
+	We now proceed to calculate $p(2)$. To this end, we first calculate the probability for the hand to only contain spades and clubs. One can observe that the number of such hands is $\binom{26}5$---represented by choosing 5 cards from the total number of cards of the required suits---minus two times $\binom{13}5$---lest allowing the possibility for the hand to only contain one suit. Since there are $\binom42 = 6$ pairs of suits we can operate on, we obtain
+	\[
+		p(2) = 6 \cdot \frac{\binom{26}5 - 2\binom{13}5}{\binom{52}5} \approx .146.
+	\]
+	We now calculate $p(4)$. Because the hand now must contain 4 suits, one can deduce the hand must contain precisely two cards of the same suit. Without loss of generality, assume that suit is spade; thus, this boils down to choosing two spades, one club, one diamond and one heart out of 13 cards of each suit. Since there are four suits we can work on, we thus yield
+	\[
+		p(4) = 4 \times \frac{\binom{13}2 \times 13 \times 13 \times 13}{\binom{52}5} \approx .264.
+	\]
+	Since $\sum p(x) = 1$ for all $x \in \{1, 2, 3, 4\}$, we can easily calculate $p(3) \approx .588$.
+\end{proof}
+
+\paragraph{b.} Now that we have obtained the pmf of $X$, we can easily calculate the expected value
+\[
+	\mathbb E[X] = \sum_{1 \le x \le 4} xp(x) = 1 \times .002 + 2 \times .146 + 3 \times .588 + 4 \times .264 = 3.114,
+\]
+the variance
+\[
+	\Var(X) = \mathbb E[X^2] - \mathbb E[X]^2 = 10.102 - 3.114 = 6.988,
+\]
+and the standard deviation
+\[
+	\sigma_X = \sqrt{\Var(X)} \approx 2.6435.
+\]
+
+\begin{problem}{96}
+	The negative binomial rv $X$ was defined as the number of $F$'s preceding the $r$th $S$. Let $Y =$ the number of trials necessary to obtain the $r$th $S$. In the same manner in which the pmf of $X$ was derived, derive the pmf of $Y$.
+\end{problem}
+
+Denote $r$ to be the number of successes and $p$ to be the success probability. The possible value for $Y$ must be $r$, $r + 1$, \dots, which makes sense since at least $r$ trials must have been performed for there to be $r$ successes in the first place. We now proceed to calculate the pmf of $Y$, for which we will denote as $p_Y(x; r, p)$. The fact that $x$ is the number of trials necessary to obtain the $r$th $S$ forces the last trial's result to be $S$. Thus, we simply choose $r - 1$ trials out of $x - 1$ to be successful. We therefore obtain the pmf of $Y$; for $x \ge r$,
+\[
+	p_Y(x; r, p) = \binom{x - 1}{r - 1}p^r(1 - p)^{x - r}.
+\]
+
+\begin{problem}{97}
+	Of all customers purchasing automatic garage-door openers, 75\% purchase a chain-driven model. Let $X =$ the number among the next 15 purchasers who select the chain-driven model.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the pmf of $X$?
+		\task Compute $P(X > 10)$.
+		\task Compute $P(6 \le X \le 10)$.
+		\task Compute $\mu$ and $\sigma^2$.
+		\task If the store currently has in stock $10$ chain-driven models and $8$ shaft-driven models, what is the probability that the requests of the 15 customers can all be met from existing stock?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Because $X$ can be modeled as a binomial distribution, we have $X \sim \Bin(15, .75)$. Thus for $0 \le x \le 15$, the pmf of $X$ is
+\[
+	b(x; 15, .75) = \binom{15}x \times .75^x \times .25^{15 - x}.
+\]
+
+\paragraph{b.} Denote $B(x; 15, .75)$ to be the cdf of $X$. Then 
+\[
+	P(X > 10) = 1 - B(10; 15, .75) \approx 1 - .3135 = .6865.
+\]
+
+\paragraph{c.}
+\[
+	P(6 \le X \le 10) = B(10; 15, .75) - B(5; 15, .75) \approx .3135 - .0008 = .3127
+\]
+
+\paragraph{d.}
+\begin{align*}
+	& \mathbb E[X] = \sum_{0 \le X \le 15} \binom{15}x x \times .75^x \times .25^{15 - x} = 11.25 \\
+	& \Var(X) = \mathbb E[X^2] - \mathbb E[X]^2 = 129.375 - 126.5625 = 2.8125.
+\end{align*}
+
+\paragraph{e.} For the requests of the $15$ customers to be met, the total number of people ordering a chain-driven models must be between $7$ and $10$ (if $X < 7$, then there is not enough shaft-driven models in stock to supply for the remaining customers). To ease the calculation, we can reuse the result from \textbf{97c} as follows:
+\[
+	P(7 \le X \le 10) = P(6 \le X \le 10) - P(X = 6) = .3127 - .0034 = .3093.
+\]
+
+\begin{problem}{98}
+	In some applications the distribution of a discrete rv $X$ resembles the Poisson distribution except that zero is not a possible value of $X$. For example, let $X =$ the number of tattoos that an individual wants removed when she or he arrives at a tattoo-removal facility. Suppose the pmf of $X$ is
+	\[
+		p(x) = k\frac{e^{-\theta}\theta^x}{x!} \quad x = 1, 2, 3, \dots.
+	\]
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Determine the value of $k$.
+		\task If the mean value of $X$ is $2.313035$, what is the probability that an individual wants at most $5$ tattoos removed?
+		\task Determine the standard deviation of $X$ when the mean value is as given in (b).
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} We note that $\sum_{x = 1}^\infty p(x) = 1$ due to the fact that $p(x)$ is the pmf of $X$. Observe the following transformation of a Poisson distribution's pmf:
+\begin{align*}
+	\sum_{x = 0}^\infty \frac{e^{-\theta}\theta^x}{x!} = 1 \iff \sum_{x = 1}^\infty \frac{e^{-\theta}\theta^x}{x!} = 1 - e^{-\theta} \iff 1 = k(1 - e^{-\theta}) \iff k = \frac1{1 - e^{-\theta}}.
+\end{align*}
+
+\paragraph{b.} We first find a general form of $\mathbb E[X]$ in terms of $\theta$:
+\[
+	\mathbb E[X] = \sum_{x = 1}^\infty xp(x) = \sum_{x = 1}^\infty \frac{xe^{-\theta}\theta^x}{(1 - e^{-\theta})x!} = \frac{1}{1 - e^{-\theta}} \sum_{x = 1}^\infty \frac{e^{-\theta}\theta^x}{(x - 1)!}.
+\]
+Performing a change of variable $x \mapsto x - 1$, we obtain
+\[
+	\mathbb E[X] = \frac{1}{1 - e^{-\theta}}\sum_{x = 0}^\infty \frac{e^{-\theta}\theta^{x + 1}}{x!} = \frac{\theta}{1 - e^{-\theta}}\sum_{x = 0}^\infty \frac{e^{-\theta}\theta^x}{x!} = \frac{\theta}{1 - e^{-\theta}}.
+\]
+Since it is given $\mathbb E[X] = 2.313035$, by trial and error one can find $\theta = 2$. Using this information we are now able to calculate $P(X \le 5)$:
+\[
+	P(X \le 5) = \sum_{x = 1}^5 \frac{e^{-2}2^x}{1 - e^{-2}} \approx .9808.
+\]
+
+\paragraph{c.} To calculate the standard deviation of $X$, we first calculate $\mathbb E[X^2]$ via calculating $\mathbb E[X(X + 1)]$:
+\[
+	\mathbb E[X(X - 1)] = \sum_{x = 1}^\infty \frac{x(x - 1)e^{-2}2^x}{x!} = \frac{e^{-2}}{1 - e^{-2{}}} \sum_{x = 2}^\infty \frac{2^x}{(x - 2)!}.
+\]
+Performing a change of variable $x \mapsto x - 2$, we obtain
+\[
+	\mathbb E[X(X - 1)] = \frac{e^{-2}}{1 - e^{-2}} \sum_{x = 0}^\infty \frac{2^{x + 2}}{x!} = \frac{4e^{-2}}{1 - e^{-2}} \sum_{x = 0}^\infty \frac{2^x}{x!} = \frac{4}{1 - e^{-2}}.
+\]
+Observe that due to being defined on integral for continuous probability space and sum for discrete probability space, the operator $\mathbb E[\cdot]$ is linear, in the sense that
+\[
+	\mathbb E[aX + bY] = a\mathbb E[X] + b\mathbb E[Y]
+\]
+for random variables $X, Y$ and scalars $a, b$. Thus $\mathbb E[X(X - 1)] = \mathbb E[X^2 - X] = \mathbb E[X^2] - \mathbb E[X]$. Therefore we yield
+\[
+	\mathbb E[X^2] = \frac4{1 - e^{-2}} + 2.313035 \approx 6.939106.
+\]
+We are now able to calculate the standard deviation of $X$:
+\[
+	\sigma_X = \sqrt{\mathbb E[X^2] - \mathbb E[X]^2} \approx 1.260546.
+\]
+
+\begin{problem}{99}
+	A \textit{k-out-of-n system} is one that will function if and only if at least $k$ of the $n$ individual components in the system function. If individual components function independently of one another, each with probability $.9$, what is the probability that a 3-out-of-5 system functions?
+\end{problem}
+
+Let $X$ be the number of components functioning. Observe that $X$ is thus a binomial rv whose pmf is
+\[
+	b(x; 5, .9) = \binom5x \times .9^x \times .1^{5 - x}.
+\]
+To calculate the probability that a 3-out-of-5 system functions, we simply calculate the probability $P(X \ge 3)$. Thus
+\[
+	P(X \ge 3) = 1 - P(X \le 2) = 1 - \sum_{x = 0}^2 b(x; 5, .9) = .99144.
+\]
+
+\begin{problem}{100}
+	A manufacturer of integrated circuit chips wishes to control the quality of its product by rejecting any batch in which the proportion of defective chips is too high. To this end, out of each batch (10,000 chips), 25 will be selected and tested. If at least 5 of these 25 are defective, the entire batch will be rejected.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the probability that a batch will be rejected if $5\%$ of the chips in the batch are in fact defective?
+		\task Answer the question posed in (a) if the percentage of defective chips in the batch is $10\%$.
+		\task Answer the question posed in (a) if the percentage of defective chips in the batch is $20\%$.
+		\task What happens to the probabilities in (a)--(c) if the critical rejection number is increased from 5 to 6?
+	\end{tasks}
+\end{problem}
+
+Let $X$ be the number of chips in the sample that are defective. Because the sample size is less than $5\%$ of the batch size, we may treat $X$ as a binomial rv. The pmf of $X$ is thus
+\[
+	b(x; 25, p) = \binom{25}x p^x(1 - p)^{25 - x}.
+\]
+
+\paragraph{a.} The probability for a batch to be rejected for $p = .05$ is
+\[
+	P(X \ge 5) =  1 - \sum_{x = 0}^4 b(x; 25, .05) \approx .0072.
+\]
+
+\paragraph{b.} The probability for a batch to be rejected for $p = .1$ is
+\[
+	P(X \ge 5) = 1 - \sum_{x = 0}^4 b(x; 25, .1) \approx .0980.
+\]
+	
+\paragraph{c.} The probability for a batch to be rejected for $p = .2$ is
+\[	
+	P(X \ge 5) = 1 - \sum_{x = 0}^4 b(x; 25, .2) \approx .5793.
+\]
+
+\paragraph{d.} A quantity of $P(X = 5)$ is deducted from each of the probability from \textbf{100a} to \textbf{100c}; i.e.,
+\[
+	P(X = 5) = \binom{25}5p^5(1 - p)^{20}.
+\]
+\begin{itemize}
+	\item For $p = .05$, then $P(X \ge 6) \approx .0012$
+	\item For $p = .1$, then $P(X \ge 6) \approx .0334$
+	\item For $p = .2$, then $P(X \ge 6) \approx .3833$
+\end{itemize}
+
+\begin{problem}{101}
+	Of the people passing through an airport metal detector, $.5\%$ activate it; let $X =$ the number among a randomly selected group of $500$ who activate the detector.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the (approximate) pmf of $X$?
+		\task Compute $P(X = 5)$.
+		\task Compute $P(5 \le X)$.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Observe that $X$ is a binomial rv whose pmf is
+\[
+	b(x; 500, .005) = \binom{500}{x} \times .005^x \times .995^{500 - x}.
+\]
+
+\paragraph{b.}
+\[
+	P(X = 5) = b(5; 500, .005) \approx .0667.
+\]
+
+\paragraph{c.}
+\[
+	P(X \ge 5) = 1 - \sum_{x = 0}^4 b(x; 500, .005) \approx .1083
+\]
+
+\begin{problem}{102}
+	An educational consulting firm is trying to decide whether high school students who have never before used a hand-held calculator can solve a certain type of problem more easily with a calculator that uses reverse Polish logic or one that does not use this logic. A sample of 25 students is selected and allowed to practice on both calculators. Then each student is asked to work one problem on the reverse Polish calculator and a similar problem on the other. Let $p = P(S)$, where $S$ indicates that a student worked the problem more quickly using reverse Polish logic than without, and let $X =$ number of $S$'s.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task If $p = .5$, what is $P(7 \le X \le 18)$?
+		\task If $p = .8$, what is $P(7 \le X \le 18)$?
+		\task If the claim that $p = .5$ is to be rejected when either $x \le 7$ or $x \ge 18$, what is the probability of rejecting the claim when it is actually correct?
+		\task If the decision to reject the claim $p = .5$ is made as in part (c), what is the probability that the claim is not rejected when $p = .6$? When $p = .8$?
+		\task What decision rule would you choose for rejecting the claim $p = .5$ if you wanted the probability in part (c) to be at most $.01$?
+	\end{tasks}
+\end{problem}
+
+Observe that $X$ is a binomial rv and thus has a pmf of
+\[
+	b(x; 25, p) = \binom{25}x p^x (1 - p)^{25 - x}.
+\]
+
+\paragraph{a.} For $p = .5$, we have
+\[
+	P(7 \le X \le 18) = \sum_{x = 7}^{18} b(x; 25, .5) \approx .9854.
+\]
+
+\paragraph{b.} For $p = .8$, we have
+\[
+	P(7 \le X \le 18) = \sum_{x = 7}^{18} b(x; 25, .8) \approx .2200.
+\]
+
+\paragraph{c.} The probability for the claim $p = .5$ to be rejected when it is actually correct is $P(X \le 7) + P(X \ge 18)$ for $p = .5$. We proceed to calculate it:
+\[
+	P(X \le 7) + P(X \ge 18) = \sum_{x = 0}^7 b(x; 25, .5) + 1 - \sum_{x = 0}^{17} b(x; 25, .5) \approx .0433.
+\]
+
+\paragraph{d.} With the policy outlined in \textbf{102c}, we proceed to calculate the probability for the claim to not be rejected for certain $p$; i.e., $P(8 \le X \le 17)$ for $p = .6$ and $p = .8$. For $p = .6$,
+\[
+	P(8 \le X \le 17) = \sum_{x = 8}^{17} b(x; 25, .6) = .8452.
+\]
+For $p = .8$,
+\[
+	P(8 \le X \le 17) = \sum_{x = 8}^{17} b(x; 25, .8) = .1091.
+\]
+
+\paragraph{e.} Let $a$ and $b$ be parameters in our decision policy such that $p = .5$ is selected if $x \le a$ and $x \ge b$. In essence, we find the most optimal $a$ and $b$ such that
+\[
+	P(X \le a) + P(X \ge b) \le .01 \tag{*}
+\]
+is maximized. To ease the calculations, we can rewrite this inequality into a sum. One thus can readily verify (*) is equivalent to
+\[
+	\sum_{x = a + 1}^{b - 1} \binom{25}x \ge 33,218,887.
+\]
+Via trials and errors, we obtain $a = 5$ and $b = 19$ to be our most optimal parameters. Therefore, for the probability in \textbf{102c} to be at most $.01$ while keeping the bounds as tight as possible, the optimal decision rule is that $p = .5$ is to be rejected when either $x \le 5$ or $x \ge 19$.
+\newpage
+\begin{problem}{103}
+	Consider a disease whose presence can be identified by carrying out a blood test. Let $p$ denote the probability that a randomly selected individual has the disease. Suppose $n$ individuals are independently selected for testing. One way to proceed is to carry out a separate test on each of the $n$ blood samples. A potentially more economical approach, group testing, was introduced during World War II to identify syphilitic men among army inductees. First, take a part of each blood sample, combine these specimens, and carry out a single test. If no one has the disease, the result will be negative, and only the one test is required. If at least one individual is diseased, the test on the combined sample will yield a positive result, in which case the $n$ individual tests are then carried out. If $p = .1$ and $n = 3$, what is the expected number of tests using this procedure? What is the expected number when $n = 5$?
+\end{problem}
+Denote by $X$, $Y$ the number of diseased individuals and the number of tests needed respectively. Note that with the way group testing is carried out, only $1$ or $n$ tests can ever be performed. More specifically, the sample size $\mathcal S$ of $Y$ is $\{1, n\}$. Also because $X$ is a binomial rv, the pmf of $X$ is thus
+\[
+	b(x; n, .1) = \binom nx \times .1^x \times .9^{n - x}.
+\]
+Recall that only one test is needed to be carried out if all $n$ individuals do not have the disease and $n$ tests if otherwise. Define $p_Y(x)$ to be the pmf of $Y$, then
+\[
+	p_Y(x) = \begin{cases}
+		b(0; n, .1) & \text{if } x = 1 \\
+		\displaystyle\sum_{k = 1}^n b(k; n, .1) & \text{if } x = n
+	\end{cases}.
+\]
+It's obvious that all $p_Y(x)$ sum to $1$ with this definition. If $n = 3$, then $Y$ has a pmf of
+\[
+	p_Y(x) = \begin{cases}
+		.729 & \text{if } x = 1 \\
+		.271 & \text{if } x = 3
+	\end{cases}
+\]
+and an expected value of
+\[
+	\mathbb E[Y] = 1 \times .729 + 3 \times .271 = 1.542.
+\]
+If $n = 5$, then $Y$ has a pmf of
+\[
+	p_Y(x) = \begin{cases}
+		.59049 & \text{if } x = 1 \\
+		.40951 & \text{if } x = 5
+	\end{cases}
+\]
+and an expected value of
+\[
+	\mathbb E[Y] = 1 \times .59049 + 5 \times .40951 = 2.63804.
+\]
+
+\end{document}

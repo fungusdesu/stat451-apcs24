@@ -1,0 +1,431 @@
+\documentclass{exam}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[main=english, vietnamese]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tasks}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+
+\tikzstyle{level 1}=[level distance=4cm, sibling distance=4cm]
+\tikzstyle{level 2}=[level distance=5cm, sibling distance=3cm]
+\tikzstyle{end} = [circle, minimum width=5pt,fill, inner sep=0pt]
+
+\definecolor{borderblue}{HTML}{33c2ff}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newbox\mizukibox
+\setbox\mizukibox\hbox{
+\raisebox{-2.5pt}{\includegraphics[height=2.5ex]{mizuki.png}}}
+\def\mizuki{\copy\mizukibox}
+
+\renewcommand\qedsymbol{$\mizuki$}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\curly}[1]{\left\{#1\right\}}
+\newcommand{\lxor}{\oplus}
+\newcommand{\Mid}{\;\middle|\;}
+
+\allowdisplaybreaks
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\makeatletter
+\long\def\paragraph{%
+  \@startsection{paragraph}{4}%
+  {\z@}{2ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\makeatletter
+\def\@xequals@fill{\arrowfill@\Relbar\Relbar\Relbar}
+\newcommand*\xequals[2][]{\DOTSB\ext@arrow0055\@xequals@fill{#1}{#2}}
+\makeatother
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\HGeom}{HGeom}
+\DeclareMathOperator{\NegBin}{NegBin}
+\DeclareMathOperator{\Pois}{Pois}
+
+\NewTColorBox{problem}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\NewTColorBox{lemma}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\title{STAT451 - Homework 4}
+\author{\foreignlanguage{vietnamese}{Trần Tôn Minh Kỳ}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}{104}
+	Let $p_1$ denote the probability that any particular code symbol is erroneously transmitted through a communication system. Assume that on different symbols, errors occur independently of one another. Suppose also that with probability $p_2$ an erroneous symbol is corrected upon receipt. Let $X$ denote the number of correct symbols in a message block consisting of $n$ symbols (after the correction process has ended). What is the probability distribution of $X$?
+\end{problem}
+
+We first calculate the probability for a single symbol is correctly received. Define by $A$ and $B$ the event of that symbol being correctly transmitted and the event of the symbol is corrected; then it is readily apparent that $p_1 = P(\overline A)$ and $p_2 = P(B \mid \overline A)$. The probability for a correct reception of the symbol is thus
+\[
+	P(A) + P(\overline A)P(B \mid \overline A) = 1 - p_1 + p_1p_2.
+\]
+We can therefore describe $X \sim \Bin(x; n, 1 - p_1 + p_1p_2)$ whose pmf is
+\[
+	b(x; n, 1 - p_1 + p_1p_2) = \binom nx x^{1 - p_1 + p_1p_2} n^{p_1 - p_1p_2}.
+\]
+
+\begin{problem}{105}
+	The purchaser of a power-generating unit requires $c$ consecutive successful start-ups before the unit will be accepted. Assume that the outcomes of individual start-ups are independent of one another. Let $p$ denote the probability that any particular start-up is successful. The random variable of interest is $X = \text{the number of start-ups that must be made prior to acceptance}$. Give the pmf of $X$ for the case $c = 2$. If $p = .9$, what is $P(X \le 8)$?
+\end{problem}
+
+Denote by $f(x; p)$ the pmf of $X$ for $c = 2$. We illustrate a series of startup results with a bitstring, where a \verb|1| indicates success (thus all such strings must terminate on the first occurence of \verb|11|). We first calculate several initial values of $f$:
+\begin{itemize}
+	\item $f(2; p) = p^2$, corresponding to \verb|11|
+	\item $f(3; p) = p^2(1 - p)$, corresponding to \verb|011|
+	\item $f(4; p) = p^3(1 - p) + p^2(1 - p)^2 = p^2(1 - p)$, corresponding to \verb|1011|, \verb|0011|
+\end{itemize}
+One can observe that for $x \ge 5$, we can model the corresponding start-up results as \verb|**|\dots\verb|*011|, where there are $x - 3$ arbitrary results. In addition, the preceding bit substring must not contain any consecutive \verb|1|'s, suggesting the substring must not have terminated. It is thus apparent that the probability for the first $x - 3$ results to align in such manner is
+\[
+	1 - \sum_{i = 2}^{x - 3}f(i; p).
+\]
+We therefore have a formulation of the pmf of $X$:
+\[
+	f(x; p) = \begin{cases}
+		p^2 & \text{if } x = 2 \\
+		p^2(1 - p) & \text{if } x \in \{3, 4\} \\
+		\displaystyle p^2(1 - p)\paren{1 - \sum_{i = 2}^{x - 3}f(i; p)} & \text{if } x > 4
+	\end{cases}.
+\]
+We now substitute $p = .9$ and calculate $P(X \le 8)$.
+\begin{align*}
+	P(X \le 8) = \sum_{i = 2}^8 f(i; .9) \approx .9995.
+\end{align*}
+
+\begin{problem}{106}
+	A plan for an executive travelers' club has been developed by an airline on the premise that 10\% of its current customer would qualify for membership.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Assuming the validity of this premise, among 25 randomly selected current customers, what is the probability that between 2 and 6 (inclusive) qualify for membership?
+		\task Again assuming the validity of the premise, what are the expected number of customers who qualify and the standard deviation of the number who qualify in a random sample of 100 current customers?
+		\task Let $X$ denote the number in a random sample of 25 current customers who qualify for membership. Consider rejecting the company's premise in favor of the claim that $p > .10$ if $x \ge 7$. What is the probability that the company's premise is rejected when it is actually valid?
+		\task Refer to the decision rule introduced in part (c). What is the probability that the company's premise is not rejected even though $p = .20$ (i.e., 20\% qualify)?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Denote by $Y$ the number of people that qualify for membership. We may model $Y$ as a binomial rv where $p = .1$ and $n = 25$. Then the pmf of $Y$ is
+\[
+	b(y; 25, .1) = \binom{25}{y} \times .1^y \times .9^{25 - y}.
+\]
+We now proceed to calculate $P(2 \le Y \le 6)$ as follows:
+\[
+	P(2 \le Y \le 6) = \sum_{i = 2}^6 \binom{25}{i} \times .1^i \times .9^{25 - i} \approx .7193.
+\]
+
+\paragraph{b.}
+The expected number of customers who qualify for membership can be calculated as the expected value of $Y \sim \Bin(100, .1)$
+\[
+	\mathbb E[Y] = 100 \times .1 = 10
+\]
+and whose standard variance is
+\[
+	\sigma_Y = \sqrt{100 \times .1 \times .9} = 3.
+\]
+
+\paragraph{c.}
+We simply calculate $P(X \ge 7)$ for $X \sim \Bin(25, .1)$:
+\[
+	P(X \ge 7) = 1 - P(X \le 6) = 1 - \sum_{i = 0}^6 \binom{25}{i} \times .1^i \times .9^{25 - i} \approx .00948.
+\]
+
+\paragraph{d.}
+We simply calculate $P(X \le 6)$ for $X \sim \Bin(25, .2)$:
+\[
+	P(X \le 6) = \sum_{i = 0}^6 \binom{25}{i} \times .2^i \times .8^{25 - i} \approx .7800.
+\]
+
+\begin{problem}{107}
+	Forty percent of seeds from maize (modern-day corn) ears carry single spikelets, and the other 60\% carry paired spikelets. A seed with single spikelets will produce an ear with single spikelets 29\% of the time, whereas a seed with paired spikelets will produce an ear with single spikelets 26\% of the time. Consider randomly selecting ten seeds.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the probability that exactly five of these seeds carry a single spikelet and produce an ear with a single spikelet?
+		\task What is the probability that exactly five of the ears produced by these seeds have single spikelets? What is the probability that at most five ears have single spikelets?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Let $A$ be the event of a maize seed carrying single spikelets and $B$ be the event of a maize seed producing an ear with single spikelets. We have the following tree diagram:
+\begin{center}
+	\begin{tikzpicture}[grow=right, sloped]
+	\node[end] {}
+		child {
+			node[end] {}        
+				child {
+					node[end] {}
+					edge from parent
+					node[above]  {$P(\overline{B} \mid \overline{A}) = .74$}
+				}
+				child {
+					node[end] {}
+					edge from parent
+					node[above]  {$P(B \mid \overline{A}) = .26$}
+				}
+				edge from parent 
+				node[above] {$P(\overline A) = .6$}
+		}
+		child {
+			node[end] {}        
+			child {
+					node[end] {}
+					edge from parent
+					node[above]  {$P(\overline{B} \mid A) = .71$}
+				}
+				child {
+					node[end] {}
+					edge from parent
+					node[above]  {$P(B \mid A) = .29$}
+				}
+			edge from parent         
+				node[above] {$P(A) = .4$}
+		};
+	\end{tikzpicture}
+\end{center}
+It is then apparent that $P(A \cap B) = P(B \mid A)P(A) = .116$. Because the number of seeds carrying a single spikelet and produce an ear with a single spikelet $X$ follows the binomial distribution $\Bin(10, .116)$, we obtain that the probability for exactly $X = 5$ seeds to have the event $A \cap B$ occuring is
+\[
+	P(X = 5) = \binom{10}{5} \times .116^5 \times .884^5 \approx .0029.
+\]
+
+\paragraph{b.} Using the law of total probability, one obtain that
+\[
+	P(B) = P(B \mid A)P(A) + P(B \mid \overline A)P(\overline A) = .272.
+\]
+Now observe that the number of seeds growing single spikelets ears $X$ follows the binomial distribution $\Bin(10, .272)$, we obtain both probabilities
+\[
+	P(X = 5) = \binom{10}5 \times .272^5 \times .728^5 \approx .0767
+\]
+and
+\[
+	P(X \le 5) = \sum_{i = 0}^5 \binom{10}i \times .272^i \times .728^{10 - i} \approx .9702.
+\]
+
+\begin{problem}{108}
+	A trial has just resulted in a hung jury because eight members of the jury were in favor of a guilty verdict and the other four were for acquittal. If the jurors leave the jury room in random order and each of the first four leaving the room is accosted by a reporter in quest of an interview, what is the pmf of $X = \text{the number of jurors favoring acquittal among those interviewed}$? How many of those favoring acquittal do you expect to be interviewed?
+\end{problem}
+One can observe that $X$ follows a hypergeometric distribution; more specifically, $X \sim \HGeom(4, 4, 12)$. Then the pmf of $X$ is described as
+\[
+	h(x; 4, 4, 12) = \frac1{495}\binom{4}{x}\binom{8}{4 - x}
+\]
+and $X$ has an expected value of
+\[
+	\mathbb E[X] = \frac{4 \times 4}{12} \approx 1.3333.
+\]
+
+\begin{problem}{109}
+	A reservation service employs five information operators who receive requests for information independently of one another, each according to a Poisson process with rate $\alpha = 2$ per minute.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the probability that during a given 1-min period, the first operator receives no requests?
+		\task What is the probability that during a given 1-min period, exactly four of the five operators receive no requests?
+		\task Write an expression for the probability that during a given 1-min period, all of the operators receive exactly the same number of requests.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Since the first operator receive requests according to a Poisson process with $\mu = 2$, we obtain the pmf for the number of requests received $X$:
+\[
+	p(x; 2) = \frac{e^{-2}\times 2^x}{x!}.
+\]
+Substituting $x = 0$ to the pmf, we obtain $p(0; 2) \approx .1353$.
+
+\paragraph{b.} Let $Y_x$ be the number of operators receiving $x$ requests; then it is readily apparent that $Y_x$ follows a binomial distribution; i.e., $Y_x \sim \Bin(5, p(x; 2))$. We now proceed to calculate the pmf of $Y_x$:
+\[
+	b(y; 5, p(x; 2)) = \binom{5}{y} p(x; 2)^y (1 - p(x; 2))^{5 - y}.
+\]
+We wish to calculate $P(Y_0 = 4)$. To this end, we use the result $p(0; 2) \approx .1353$ in \textbf{109a}. A computation follows.
+\[
+	b(4; 5, .1353) = \binom54 \times (.1353)^4 \times (1 - .1353)^1 \approx .0015.
+\]
+
+\paragraph{c.} Using the pmf of $Y_x$ in \textbf{109b}, we calculate the sum of $P(Y_x = 5)$ over all possible values of $x$ to be the following:
+\[
+	e^{-10}\sum_{x = 0}^\infty\frac{2^{5x}}{(x!)^5} \approx .0031.
+\]
+
+\begin{problem}{110}
+	Grasshoppers are distributed at random in a large field according to a Poisson process with parameter $\alpha = 2$ per square yard. How large should the radius $R$ of a circular sampling region be taken so that the probability of finding at least one in the region equals .99?
+\end{problem}
+
+Define by $A$ the sampling area in terms of square yards and $X$ the number of grasshoppers found in a sample region. The expectation of $X$ grasshoppers being found is thus $2A$. Using this, we are able to yield the pmf of $X$ to be the following:
+\[
+	p(x; 2A) = \frac{e^{-2A} \times (2A)^x}{x!}.
+\]
+We now wish to calculate the value for $A$ such that $P(X \ge 1) = 1 - P(X = 0) = .99$. Observe that
+\[
+	P(X = 0) = e^{-2A} = .01.
+\]
+Thus $A \approx 2.3026$. If the sampling region is circular, then the radius $R$ of it must be $R \approx .8561$.
+
+\begin{problem}{111}
+	A newsstand has ordered five copies of a certain issue of a photography magazine. Let $X = \text{the number of individuals who come in to purchase this magazine}$. If $X$ has a Poisson distribution with parameter $\mu = 4$, what is the expected number of copies that are sold?
+\end{problem}
+
+Let $Y$ be the number of magazine copies which are sold. For $y \le 4$, $Y$ follows a distribution akin to that of $X$:
+\[
+	P(Y = y \le 4) = \frac{e^{-4}\times 4^y}{y!}.
+\]
+However, observe that for $y = 5$, the number of copies no longer follows a Poisson distribution---higher number of individuals coming in still result in 5 copies being sold---and thus
+\[
+	P(Y = 5) = 1 - P(X \le 4) = 1 - \sum_{x = 0}^4 \frac{e^{-4} \times 4^x}{x!} \approx .3712.
+\]
+Calculating $P(Y = y \le 4)$ for $y \in \{0, 1, 2, 3, 4\}$, we thus obtain the pmf of $Y$:
+\begin{center}
+	\bgroup
+	\def\arraystretch{1.5}
+	\begin{tabular}{c|cccccc}
+		$y$ & 0 & 1 & 2 & 3 & 4 & 5 \\
+		\hline
+		$p_Y(y)$ & .0183 & .0733 & .1465 & .1954 & .1954 & .3712
+	\end{tabular}
+	\egroup
+\end{center}
+One can readily verify that $\sum p_Y(y)$ indeed sums to $1$. Using this pmf, calculating the expected value of $Y$ is trivial:
+\[
+	\mathbb E[Y] = \sum_{y = 0}^5 yp_Y(y) \approx 3.5897.
+\]
+
+\begin{problem}{112}
+	Individuals A and B begin to play a sequence of chess games. Let $S = \{\text{A wins a game}\}$, and suppose that outcomes of successive games are independent with $P(S) = p$ and $P(F) = 1 - p$ (they never draw). They will play until one of them wins ten games. Let $X = \text{the number of game played}$ (with possible values $10, 11, \dots, 19$).
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task For $x = 10, 11, \dots, 19$, obtain an expression for $p(x) = P(X = x)$.
+		\task If a draw is possible, with $p = P(S)$, $q = P(F)$, $1 - p - q = P(\text{draw})$, what are the possible values of $X$? What is $P(20 \le X)$?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} We now proceed to derive the pmf of $X$. Note that we can model the game results as a string (for instance, \verb|SFFSFSSSSFSSFSS|), where each string must contain exactly ten \verb|S| or ten \verb|F|. We thus divide into two types of strings:
+\begin{itemize}
+	\item For strings that represent A winning ten games, they must terminate on the tenth instance of \verb|S|, thus we have $x - 1$ slots left to insert nine \verb|S|, where $10 \le x \le 19$. Then the probability for A to win ten games out of $x$ games is
+	\[
+		\binom{x - 1}{9}p^{10}(1 - p)^{x - 10}.
+	\]
+	\item Using a similar line of reasoning, the probability for B to win ten games out of $x$ games is
+	\[
+		\binom{x - 1}{9}(1 - p)^{10}p^{x - 10}.
+	\]
+\end{itemize}
+The pmf of $X$ is thus
+\[
+	p_X(x; p) = \binom{x - 1}{9}(p^{10}(1 - p)^{x - 10} + (1 - p)^{10}p^{x - 10}).
+\]
+One can readily verify that the pmf sums to $1$ for all possible values of $X$.
+
+\paragraph{b.} Because there is a possibility for a draw, the possible values of $X$ now span from $10$ to infinity, since the number of draws can be arbitrarily many. From the formulation of the pmf of $X$ for $q = 1 - p$, we can easily extend it into an incomplete pmf of $10 \le X \le 19$ for other values of $q$. In particular, if we include \verb|D| to indicate a draw, we also consider different permutations of the remaining $x - 1$ slots to include \verb|D|. It is then clear that for $10 \le x \le 19$, we have the following:
+\[
+	p_X(x; p, q) = \binom{x - 1}{9} \paren{p^{10}\sum_{i = 0}^{x - 10}\binom{x - 10}i q^i (1 - p - q)^{x - 10 - i} + q^{10}\sum_{i = 0}^{x - 10}\binom{x - 10}i p^i (1 - p - q)^{x - 10 - i}}
+\]
+We dutifully note that because this is an incomplete pmf, it does not sum to $1$ over $10 \le x \le 19$. $P(X \ge 20)$ can then be computed as
+\[
+	1 - P(X \le 19) = 1 - \sum_{i = 10}^{19} p_X(i; p, q).
+\]
+
+\begin{problem}{113}
+	A test for the presence of a certain disease has probability .20 of giving a false-positive reading (indicating that an individual has the disease when this is not the case) and probability .10 of giving a false-negative result. Suppose that ten individuals are tested, five of whom have the disease and five of whom do not. Let $X = \text{the number of positive readings that result}$.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Does $X$ have a binomial distribution? Explain your reasoning.
+		\task What is the probability that exactly three of the ten test results are positive?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.}
+$X$ does not follow a binomial distribution, since the probability for positive readings depend on each person; i.e., whether they have the disease or not.
+
+\paragraph{b.}
+We divide into four cases via the number of positive test results that happen on people having the disease.
+\begin{description}
+	\item[All three positive test results on people having the disease:]
+	\[
+		\binom53 \times .8^5 \times .9^3 \times .1^2 \approx .0239. 
+	\]
+	\item[Two positive results on the diseased, one on the healthy:]
+	\[
+		\binom52\binom51 \times .8^4 \times .2^1 \times .9^2 \times .1^3 \approx .0033.
+	\]
+	\item[One positive result on the diseased, two on the healthy:]
+	\[
+		\binom51\binom52 \times .8^3 \times .2^2 \times .9^1 \times .1^4 \approx .0672.
+	\]
+	\item[All three positive results on the diseased:]
+	\[
+		\binom53 \times .8^2 \times .2^3 \times .1^5 \approx .0000005.
+	\]
+\end{description}
+Summing up the four results, we yield $.0273$ to be the probability for exactly three results out of ten to return positive on a sample of five healthy and five diseased individuals.
+
+\end{document}

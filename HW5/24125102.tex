@@ -1,0 +1,529 @@
+\documentclass{exam}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[main=english, vietnamese]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tasks}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+
+\tikzstyle{level 1}=[level distance=4cm, sibling distance=4cm]
+\tikzstyle{level 2}=[level distance=5cm, sibling distance=3cm]
+\tikzstyle{end} = [circle, minimum width=5pt,fill, inner sep=0pt]
+
+\definecolor{borderblue}{HTML}{33c2ff}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newbox\mizukibox
+\setbox\mizukibox\hbox{
+\raisebox{-2.5pt}{\includegraphics[height=2.5ex]{mizuki.png}}}
+\def\mizuki{\copy\mizukibox}
+
+\renewcommand\qedsymbol{$\mizuki$}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\curly}[1]{\left\{#1\right\}}
+\newcommand{\lxor}{\oplus}
+\newcommand{\Mid}{\;\middle|\;}
+
+\allowdisplaybreaks
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\makeatletter
+\long\def\paragraph{%
+  \@startsection{paragraph}{4}%
+  {\z@}{2ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\makeatletter
+\def\@xequals@fill{\arrowfill@\Relbar\Relbar\Relbar}
+\newcommand*\xequals[2][]{\DOTSB\ext@arrow0055\@xequals@fill{#1}{#2}}
+\makeatother
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\HGeom}{HGeom}
+\DeclareMathOperator{\NegBin}{NegBin}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator{\Uniform}{Uniform}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Weibull}{Weibull}
+\DeclareMathOperator{\Lognormal}{Lognormal}
+\DeclareMathOperator{\Med}{Med}
+
+\NewTColorBox{problem}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\NewTColorBox{lemma}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\title{STAT451 - Homework 5}
+\author{\foreignlanguage{vietnamese}{Trần Tôn Minh Kỳ}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}{102}
+	Let $X$ represent the number of individuals who respond to a particular online coupon offer. Suppose that $X$ has approximately a Weibull distribution with $\alpha = 10$ and $\beta = 20$. Calculate the best possible approximation to the probability that $X$ is between 15 and 20, inclusive.
+\end{problem}
+
+The cdf of $X \sim \Weibull(10, 20)$ is described as
+\[
+	F(x; 10, 20) = 1 - \exp(-\paren{\frac{x}{20}}^{10})
+\]
+for $x \ge 0$ and $0$ for $x < 0$. Thus the probability for $15$ to $20$ people to respond to the coupon offer is
+\[
+	F(20; 10, 20) - F(15; 10, 20) \approx .5774.
+\]
+
+\begin{problem}{103}
+	The article \textbf{``Conputer Assisted Net Weight Control'' (\textit{Quality Progress}, 1983: 22--25)} suggests a normal distribution with mean 137.2 oz and standard deviation 1.6 oz for the actual contents of jars of a certain type. The stated contents was 135 oz.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the probability that a single jar contains more than the stated contents?
+		\task Among ten randomly selected jars, what is the probability that at least eight contain more than the stated contents?
+		\task Assuming that the mean remains at 137.2, to what value would the standard deviation have to be changed so that 95\% of all jars contain more than the stated contents?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Let $X$ be the contents of a jar. Because $X$ follows a normal distribution $X \sim \mathcal N(137.2, 1.6)$, we can calculate the probability for a jar to exceed the stated contents:
+\[
+	1 - \Phi\paren{\frac{135 - 137.2}{1.6}} \approx .9154.
+\]
+
+\paragraph{b.} Because the contents of a jar does not affect the other, the number of jars follows a binomial distribution $\Bin(10, .6431)$. We can thus easily calculate the probability for at least $8$ jars to contain more than the stated contents as follows:
+\[
+	\binom{10}{8} \times .9154^8 \times (1 - .9154)^2 + \binom{10}{9} \times .9154^9 \times (1 - .9154)^1 + \binom{10}{10} \times .9154^{10} \approx .9538.
+\]
+
+\paragraph{c.} We wish to find the standard deviation $\sigma$ such that \[
+	1 - \Phi\paren{\frac{135 - 137.2}{\sigma}} = .95 \implies \Phi\paren{\frac{135 - 137.2}{\sigma}} = .05.
+\]
+Looking up the normal curve areas table, we find that the value $z = -1.65$ yields the closest value to $\Phi(z) = .05$. Substitute it to the fraction, we obtain that $\sigma = 4/3$, and we are done.
+
+\begin{problem}{104}
+	When circuit boards used in the manufacture of compact disc players are tested, the long-run percentage of defectives is $5\%$. Suppose that a batch of 250 boards has been received and that the condition of any particular board is independent of that of any other board.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the approximate probability that at least $10\%$ of the boards in the batch are defective?
+		\task What is the approximate probability that there are exactly 10 defectives in the batch?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} We wish to calculate the probability that at least 10\% of the boards---25 boards out of 250---are defective. Observe that we can model the number of defective circuit boards $X$ as a normal distributed rv with $\mu = np = 12.5$ and $\sigma = \sqrt{np(1 - p)} = 3.446$. We thus obtain that
+\[
+	P(X \ge 25) = 1 - \Phi\paren{\frac{25 + .5 - 12.5}{3.446}} \approx .00008.
+\]
+
+\paragraph{b.} The probability for an exact number of 10 defective boards being in the patch is the area under the normal curve $\mathcal N(12.5, 3.446)$ in the interval $[9.5, 10.5]$. Thus
+\[
+	P(X = 10) = \Phi\paren{\frac{10.5 - 12.5}{3.446}} - \Phi\paren{\frac{9.5 - 12.5}{3.446}} \approx .0888.
+\]
+
+\begin{problem}{105}
+	Exercise 38 introduced two machines that produce wine corks, the first one having a normal diameter distribution with mean value 3 cm and standard deviation .1cm, and the second having a normal diameter distribution with mean value 3.04 cm and standard deviation .02 cm. Acceptable corks have diameters between 2.9 and 3.1 cm. If 60\% of all corks used come from the first machine and a randomly selected cork is found to be acceptable, what is the probability that it was produced by the first machine?
+\end{problem}
+
+Denote by $A$ the event of a cork belonging to the first machine and $B$ the event of a cork being acceptable; then we know that $P(A) = .6$. We begin by first calculating $P(B \mid A)$---the probability for a cork to be acceptable given that it belongs to the first machine. Observe that the diameter of such corks $X$ follow a normal distribution $X \sim \mathcal N(3, .1)$ and so we can easily calculate
+\[
+	P(B \mid A) = P(2.9 \le X \le 3.1) = \Phi\paren{\frac{3.1 - 3}{.1}} - \Phi\paren{\frac{2.9 - 3}{.1}} \approx .6827
+\]
+We can easily calculate $P(B \mid \overline A)$ in the same manner since the diameter of corks produced by the second machine $X$ also follow a normal distribution $X \sim \mathcal N(3.04, .02)$:
+\[
+	P(B \mid \overline A) = P(2.9 \le X \le 3.1) = \Phi\paren{\frac{3.1 - 3.04}{.02}} - \Phi\paren{\frac{2.9 - 3.04}{.02}} \approx .9987
+\]
+We now proceed to calculate $P(A \mid B)$, for which we will use Bayes' theorem:
+\[
+	P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B \mid A)P(A) + P(B \mid \overline A)P(\overline A)} \approx .5063.
+\]
+
+\begin{problem}{106}
+	The reaction time (in seconds) to a certain stimulus is a continuous random variable with pdf
+	\[
+		f(x) = \begin{cases}
+			\displaystyle \frac32 \cdot \frac1{x^2} & 1 \le x \le 3 \\
+			0 & \text{otherwise}
+		\end{cases}.
+	\]
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Obtain the cdf.
+		\task What is the probability that reaction time is at most 2.5 sec? Between 1.5 and 2.5 sec?
+		\task Compute the expected reaction time.
+		\task Compute the standard deviation of reaction time.
+		\task If an individual takes more than 1.5 sec to react, a light comes on and stays on either until one further second has elapsed or until the person reacts (whichever happens first). Determine the expected amount of time that the light remains lit.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Let $X$ be the reaction time to the stimulus. The cdf of $X$ can be obtained by integrating the $f(x)$ as follows:
+\[
+	F(x) = \int_1^x \frac32 \times \frac1{y^2}\dd y = \eval{-\frac32 \times \frac1y}_1^x = \frac32\paren{1 - \frac1x},
+\]
+where $1 \le x \le 3$. It is trivial that $F(x) = 0$ for values of $x$ below this interval and $F(x) = 1$ for values of $x$ above this interval. We thus yield that
+\[
+	F(x) = \begin{cases}
+		0 & x < 1 \\
+		\displaystyle \frac32\paren{1 - \frac1x} & 1 \le x \le 3 \\
+		1 & x > 3
+	\end{cases}.
+\]
+
+\paragraph{b.} The probability that reaction time is at most 2.5 sec is
+\[
+	F(2.5) = .9
+\]
+and that of reaction time between 1.5 and 2.5 sec is
+\[
+	F(2.5) - F(1.5) = .4.
+\]
+
+\paragraph{c.} The expected reaction time is calculated as
+\[
+	\mathbb E[X] = \int_1^3 x \times \frac32 \times \frac1{x^2}\dd x = \frac32 \int_1^3 \frac1x \dd x = \frac32 \eval{\ln(x)}_1^3 \approx 1.6479.
+\]
+
+\paragraph{d.} We first calculate the expected value of $X^2$:
+\[
+	\mathbb E[X^2] = \int_1^3 x^2 \times \frac32 \times \frac1{x^2}\dd x = \frac32 \int_1^3 \dd x = \eval{\frac32x}_1^3 = 3.
+\]
+The standard deviation can then be calculated as
+\[
+	\sigma = \mathbb E[X^2] - \mathbb E[X]^2 \approx .2844.
+\]
+
+\paragraph{e.} Let $h(x)$ be the function expressing the time the light is enabled. Observe that for $1.5 < x \le 2.5$, the light is on for $x - 1.5$ sec, whereas for $2.5 < x \le 3$, the light is on for one full sec. Thus $h(x)$ can be described as the following piecewise function:
+\[
+	h(x) = \begin{cases}
+		x - 1.5 & 1.5 < x \le 2.5 \\
+		1 & 2.5 < x \le 3 \\
+		0 & \text{otherwise}
+	\end{cases}.
+\]
+We wish to find the expectation of the time the light remains lits; i.e., $h(X)$. We thus obtain that
+\[
+	\mathbb E[h(x)] = \int_1^3 h(x)f(x)\dd x = \int_{1.5}^{2.5} (x - 1.5) \times \frac32 \times \frac1{x^2} \dd x + \int_{2.5}^3 \frac32 \times \frac1{x^2} \dd x \approx .2662.
+\]
+
+\begin{problem}{107}
+	Let $X$ denote the temperature at which a certain chemical reaction takes place. Suppose that $X$ has pdf
+	\[
+		f(x) = \begin{cases}
+			\displaystyle \frac19 (4 - x^2) & -1 \le x \le 2 \\
+			0 & \text{otherwise}
+		\end{cases}.
+	\]
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Sketch the graph of $f(x)$.
+		\task Determine the cdf and sketch it.
+		\task Is $0$ the median temperature at which the reaction takes place? If not, is the median temperature smaller or larger than $0$?
+		\task Suppose this reaction is independently carried out once in each of ten different labs and that the pdf of reaction time in each lab is as given. Let $Y = \text{the number among the ten labs at which the temperature exceeds 1}$. What kind of distribution does $Y$ have?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} The sketch of $f(x)$ is given as follows:
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./img/107a.png}
+\end{figure}
+
+\paragraph{b.} The cdf of $X$ can be obtained by integrating the pdf; observe that
+\[
+	F(x) = \int_{-1}^x \frac19(4 - y^2)\dd y = \eval{\paren{\frac{4y}9 - \frac{y^3}{27}}}_{-1}^x = \frac{4x}9 - \frac{x^3}{27} + \frac{11}{27}
+\]
+for $-1 \le x \le 2$. It is trivial that $F(x) = 0$ for values of $x$ below this interval and $F(x) = 1$ for values of $x$ above this interval. Thus the cdf of $X$ can finally be described as
+\[
+	F(x) = \begin{cases}
+		0 & x < -1 \\
+		\displaystyle - \frac{x^3}{27} + \frac{4x}9 + \frac{11}{27} & -1 \le x \le 2 \\
+		1 & x > 2
+	\end{cases}
+\]
+\newpage
+and sketched as
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./img/107b.png}
+\end{figure}
+
+\paragraph{c.} Plugging $x = 0$ into the cdf, we yield that $F(0) \approx .4074$ and so $0$ is not the median temperature. Due to the nature of a distribution's cdf, $F(x)$ is a càdlàg function and thus suggests that the median temperature is larger than $0$ (the fact that $F(0) \approx .4074$ shows the value $a$ such that $F(a) = .5$ must be in the right).
+
+\paragraph{d.} We first calculate the probability for one reaction whose temperature exceeds 1:
+\[
+	P(X > 1) = 1 - F(1) \approx .1852.
+\]
+Because the reactions are independent and identically distributed, we obtain that $Y$ follows a binomial distribution $Y \sim \Bin(10, .1852)$.
+
+\begin{problem}{108}
+	An oocyte is a female germ cell involved in reproduction. Based on analyses of a large sample, the article \textbf{``Reproductive Traits of Pioneer Gastropod Species Colonizing Deep-Sea Hydrothermal Vents After an Eruption'' (\textit{Marine Biology}, 2011: 181--192)} proposed the following mixture of normal distributions as a model for the distribution of $X = \text{oocyte diameter}$ ($\mu$m):
+	\[
+		f(x) = pf_1(x; \mu_1, \sigma) + (1 - p)f_2(x; \mu_2, \sigma)
+	\]
+	where $f_1$ and $f_2$ are normal pdfs. Suggested parameter values were $p = .35$, $\mu_1 = 4.4$, $\mu_2 = 5.0$, and $\sigma = .27$.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the expected (i.e. mean) value of oocyte diameter?
+		\task What is the probability that oocyte diameter is between $4.4$ $\mu$m and $5.0$ $\mu$m?
+		\task What is the probability that oocyte diameter is smaller than its mean value? What does this imply about the shape of the density curve?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Plugging $p = .35$, $\mu_1 = 4.4$, $\mu_2 = 5.0$ and $\sigma = .27$, we obtain that \[
+	f(x) = .35f_1(x; 4.4, .27) + .65f_2(x; 5.0, .27).
+\]
+The expected value of oocyte diameter is then calculated as
+\begin{align*}
+	\mathbb E[X] &= \int_{-\infty}^{\infty} xf(x)\dd x \\
+	&= .35\int_{-\infty}^{\infty} xf_1(x; 4.4, .27)\dd x + .65\int_{-\infty}^{\infty} xf_2(x; 5.0, .27)\dd x \\
+	&= .35 \times 4.4 + .65 \times 5.0 = 4.79.
+\end{align*}
+
+\paragraph{b.} The probability that oocyte diameter is between 4.4 $\mu$m and 5.0 $\mu$m is
+\begin{align*}
+	P(4.4 \le X \le 5.0) &= \int_{4.4}^{5.0} f(x) \dd x \\
+	&= .35\int_{4.4}^{5.0} f_1(x; 4.4, .27)\dd x + .65\int_{4.4}^{5.0} f_2(x; 5.0, .27)\dd x \\
+	&= .35\paren{\Phi\paren{\frac{5.0 - 4.4}{.27}} - \Phi\paren{\frac{4.4 - 4.4}{.27}}} + .65\paren{\Phi\paren{\frac{5.0 - 5.0}{.27}} - \Phi\paren{\frac{4.4 - 5.0}{.27}}} \\
+	&\approx .4869.
+\end{align*}
+
+\paragraph{c.} The probability that oocyte diameter is smaller than 4.79 is
+\begin{align*}
+	P(X \le 4.79) &= \int_{-\infty}^{4.79} f(x)\dd x \\
+	&= .35\int_{-\infty}^{4.79} f_1(x; 4.4, .27)\dd x + .65\int_{-\infty}^{4.79} f_1(x; 5.0, .27)\dd x \\
+	&= .35\Phi\paren{\frac{4.79 - 4.4}{.27}} + .65\Phi\paren{\frac{4.79 - 5.0}{.27}} \\
+	&\approx .4659.
+\end{align*}
+
+This suggest that the majority of the area under the density curve lies on the right side of the mean.
+
+\begin{problem}{109}
+	The article \textbf{``The Prediction of Corrosion by Statistical Analysis of Corrosion Profiles'' (\textit{Corrosion Science}, 1985: 305--315)} suggests the following cdf for the depth $X$ of the deepest pit in an experiment involving the exposure of carbon manganese steel to acidified seawater.
+	\[
+		F(x; \alpha, \beta) = \exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}} \qquad -\infty < x < \infty
+	\]
+	The authors propose the values $\alpha = 150$ and $\beta = 90$. Assume this to be the correct model.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the probability that the depth of the deepest pit is at most 150? At most 300? Between 150 and 300?
+		\task Below what value will the depth of the maximum pit be observed in 90\% of all such experiments?
+		\task What is the density function of $X$?
+		\task The density function can be shown to be unimodal (a single peak). Above what value on the measurement axis does this peak occur?
+		\task It can be shown that $\mathbb E[X] \approx .5772\beta + \alpha$. What is the mean for the given values of $\alpha$ and $\beta$, and how does it compare to the median and mode? Sketch the graph of the density function.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Substituting $\alpha = 150$ and $\beta = 90$ to the cdf of $X$, we obtain
+\[
+	F(x; 150, 90) = \exp\paren{-\exp\paren{-\frac{x - 150}{90}}}
+\]
+
+The probabilities of certain depths is calculated as follows:
+\[
+	P(X \le 150) = F(150; 150, 90) \approx .3679,
+\]
+\[
+	P(X \le 300) = F(300; 150, 90) \approx .8279,
+\]
+\[
+	P(150 \le X \le 300) = F(300; 150, 90)- F(150; 150, 90) \approx .4600.
+\]
+
+\paragraph{b.} We wish to calculate the value $x$ such that
+\[
+	P(X \le x) = .9.
+\]
+Now observe that
+\begin{gather*}
+	\exp\paren{-\exp\paren{-\frac{x - 150}{90}}} = .9 \\
+	\exp\paren{-\frac{x - 150}{90}} = -\ln(.9) \\
+	\frac{x - 150}{90} = -\ln(-\ln(.9)) \\
+	x = -90\ln(-\ln(.9)) + 150 \approx 352.5330.
+\end{gather*}
+
+\paragraph{c.} The density function can be obtained by differentiating $F(x; \alpha, \beta)$ with respect to $x$ as follows:
+\begin{align*}
+	f(x; \alpha, \beta) = F'(x; \alpha, \beta) &= \paren{\exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}}}' \\
+	&= -\paren{\exp\paren{-\frac{x - \alpha}{\beta}}}'\exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}} \\
+	&= \paren{\frac{x - \alpha}{\beta}}'\exp\paren{-\frac{x - \alpha}{\beta}}\exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}} \\
+	&= \frac1\beta\exp\paren{-\frac{x - \alpha}{\beta}}\exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}}.
+\end{align*}
+
+\paragraph{d.} We proceed to calculate the maximum value of $f(x; \alpha, \beta)$. To this end, we first compute the derivative of $f(x; \alpha, \beta)$ with respect to $x$:
+\[
+	f'(x; \alpha, \beta) = \frac1{\beta^2} \exp\paren{-\frac{x - \alpha}{\beta}}\exp\paren{-\exp\paren{-\frac{x - \alpha}{\beta}}}\paren{\exp\paren{-\frac{x - \alpha}{\beta}} - 1}.
+\]
+We now solve for $x$ in the equation $f'(x; \alpha, \beta) = 0$. Note that the first, second and third term in $f'(x; \alpha, \beta) = 0$ are always positive and thus our eequation is reduced to
+\[
+	\exp\paren{-\frac{x - \alpha}{\beta}} - 1 = 0.
+\]
+We therefore obtain $x = \alpha$. Because the pdf is unimodal, the value $x = \alpha$ is the only absolute extremum---and in fact, maximum---of the pdf of $X$ and thus is the value where the peak of the pdf occurs.
+
+\paragraph{e.} For given values of $\alpha$ and $\beta$, The mean of $X$ can be calculated as
+\[
+	\mathbb E[X] \approx .5772\beta + \alpha = 201.948.
+\]
+The median of $X$ can be calculated as the solution to the equation
+\[
+	P(X \le x) = .5
+\]
+and so $\Med(X) = -90\ln(-\ln(.5)) + 150 \approx 182.9862$. As derived from \textbf{109d}, the mode is equal to $\alpha = 150$. Thus one can see that the mean exceeds both the median and the mean. The graph of the density function can then be sketched as follows.
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{img/109e.png}
+\end{center}
+
+\begin{problem}{110}
+	Let $t = \text{the amount of sales tax a retailer owes the government for a certain period}$. The article \textbf{``Statistical Sampling in Tax Audits'' (\textit{Statistics and the Law}, 2008: 320--343)} proposes modeling the uncertainty in $t$ by regarding it as a normally distributed random variable with mean value $\mu$ and standard deviation $\sigma$ (in the article, these two parameters are estimated from the results of a tax audit involving $n$ sampled transactions). If $a$ represents the amount the retailer is assessed, then an under-assessment results if $t > a$ and an over-assessment results if $a > t$. The proposed penalty (i.e., loss) function for over- or under-assessment is $L(a, t) = t - a$ if $t > a$ and $ = k(a - t)$ if $t \le a$ ($k > 1$ is suggested to incorporate the idea that over-assessment is more serious than under-assessment).
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Show that $a^* = \mu + \sigma\Phi^{-1}(1/(k + 1))$ is the value of $a$ that minimizes the expected loss, where $\Phi^{-1}$ is the inverse function of the standard normal cdf.
+		\task if $k = 2$ (suggested in the article), $\mu = \$100,000$, and $\sigma = \$10,000$, what is the optimal value of $a$, and what is the resulting probability of over-assessment?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.}
+\begin{proof}
+	
+	Denote by $L$ to be the random variable depicting the value of loss function (we abuse some notation here by denoting $L$ to be both the random variable of the loss and the loss function). We wish to calculate the assessed tax amount $a^*$ such that it yields the minimum $\mathbb E[L]$. Observe that
+	\begin{align*}
+		\mathbb E[L] &= \int_{-\infty}^\infty \frac{L(a, t)}{\sqrt{2\pi}\sigma}\exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t \\
+		&= \int_{-\infty}^a \frac{k(a - t)}{\sqrt{2\pi}\sigma}\exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}} \dd t + \int_a^\infty \frac{t - a}{\sqrt{2\pi}\sigma}\exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t.
+	\end{align*}
+	We now differentiate $\mathbb E[L]$ with respect to $a$ in tandem with applying Leibniz integral rule:
+	\begin{align}
+		\frac{\dd}{\dd a} \mathbb E[L] &= \frac{\dd}{\dd a} \int_{-\infty}^a \frac{k(a - t)}{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t + \frac{\dd}{\dd a} \int_a^\infty \frac{t - a}{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t \\
+		&= \int_{-\infty}^a \frac{\partial}{\partial a} \frac{k(a - t)}{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t + \int_a^{\infty} \frac{\partial}{\partial a} \frac{t - a}{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t \\
+		&= \int_{-\infty}^a \frac{k}{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t - \int_a^{\infty} \frac1{\sqrt{2\pi}\sigma}\exp\paren{-\frac{(t - \mu)^2}{2\sigma^2}}\dd t \\
+		&= k\Phi\paren{\frac{a - \mu}{\sigma}} - \paren{1 - \Phi\paren{\frac{a - \mu}{\sigma}}}.
+	\end{align}
+	Setting the derivative to $0$, we proceed to solve for $a$:
+	\begin{gather*}
+		k\Phi\paren{\frac{a - \mu}{\sigma}} - \paren{1 - \Phi\paren{\frac{a - \mu}{\sigma}}} = 0 \\
+		(k + 1)\Phi\paren{\frac{a - \mu}{\sigma}} - 1 = 0 \\
+		\Phi\paren{\frac{a - \mu}{\sigma}} = \frac{1}{k + 1} \\
+		\frac{a - \mu}{\sigma} = \Phi^{-1}\paren{\frac1{k + 1}} \\
+		a = \mu + \sigma\Phi^{-1}(\frac1{k + 1})
+	\end{gather*}
+	This is in fact the optimal $a^*$ we desire to find, since the normal distribution is unimodal.
+\end{proof}
+
+\paragraph{b.} We substitute the parameters in and yield the optimal value of $a$ to be $a = \$95,693$. The probability of over-assessment can be calculated as
+\[
+	P(t \le 95693) = \Phi\paren{\frac{95693 - 100000}{10000}} \approx .3333.
+\]
+
+\begin{problem}{111}
+	The \textit{mode} of a continuous distribution is the value $x^*$ that maximizes $f(x)$.
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task What is the mode of a normal distribution with parameters $\mu$ and $\sigma$?
+		\task Does the uniform distribution with parameters $A$ and $B$ have a single mode? Why or why not?
+		\task What is the mode of an exponential distribution with parameter $\lambda$?
+		\task If $X$ has a gamma distribution with parameter $\alpha$ and $\beta$, and $\alpha > 1$, find the mode.
+		\task What is the mode of a chi-squared distribution having $v$ degrees of freedom?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} The pdf of a normal distribution is given by
+\[
+	f(x; \mu, \sigma) = \frac1{\sqrt{2\pi}\sigma} \exp\paren{-\frac{(x - \mu)^2}{2\sigma^2}}.
+\]
+We begin by computing the derivative of $f$ with respect to $x$. Observe that
+\begin{align*}
+	f'(x; \mu, \sigma) &= \frac1{\sqrt{2\pi}\sigma} \paren{\exp\paren{-\frac{(x - \mu)^2}{2\sigma^2}}}' \\
+	&= -\frac1{\sqrt{2\pi}\sigma}\paren{\frac{(x - \mu)^2}{2\sigma^2}}'\exp\paren{-\frac{(x - \mu)^2}{2\sigma^2}} \\
+	&= -\frac{x - \mu}{\sqrt{2\pi}\sigma^3}\exp\paren{-\frac{(x - \mu)^2}{2\sigma^2}}.
+\end{align*}
+We now set this derivative to $0$ to calculate the critical values. Note that because the second term is always positive, our equation is reduced to
+\[
+	-\frac{x - \mu}{\sqrt{2\pi}\sigma^3} = 0
+\]
+whose solution is $x = \mu$. Because the normal distribution is unimodal, we can be certain this is the only maximum in the function and thus we yield $\mu$ to be the mode of a normal distribution.
+
+\paragraph{b.} The uniform distribution does not have a single mode, since $f(x)$ holds a constant value $1/(B - A)$ for $A \le x \le B$ and thus have infinite maxima.
+
+\paragraph{c.} The pdf of an exponential distribution is given by
+\[
+	f(x; \lambda) = \lambda e^{-\lambda x}
+\]
+for $x \ge 0$ and $0$ for any other value of $x$. Since the pdf is monotonically decreasing on $[0, \infty)$, the distribution must be densest at $x = 0$.
+
+\paragraph{d.} We first observe that maximizing $f(x)$ is equivalent to maximizing $\ln(f(x))$ (as a matter of fact, this works for any monotonically increasing function). Using this fact, we differentiate $\ln(f(x))$, where $f(x)$ is the pdf of the Gamma distribution. Observe that
+\begin{align*}
+	(\ln(f(x)))' &= \paren{\ln\paren{\frac1{\beta^\alpha \Gamma(\alpha)}x^{\alpha - 1}\exp\paren{-\frac{x}{\beta}}}}' \\
+	&= \paren{\ln\paren{\frac1{\beta^\alpha \Gamma(\alpha)}}}' + (\ln(x^{\alpha - 1}))' - \paren{\frac{x}{\beta}}' \\
+	&= \frac{\alpha - 1}{x} - \frac1\beta.
+\end{align*}
+We now set this derivative to $0$ to solve for $x$. Doing that we thus yield $x = \beta(\alpha - 1)$ and so it is the mode for Gamma distribution.
+
+\paragraph{e.} Because the chi-squared distribution is just a special case of the Gamma distribution, for $v > 1$ we yield the mode to be $x = v - 2$. For $v = 1$, observe that the chi-squared distribution is asymptotic at $0$ and thus has a mode of $0$.
+
+\end{document}
