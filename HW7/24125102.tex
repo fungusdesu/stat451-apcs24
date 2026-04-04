@@ -1,0 +1,372 @@
+\documentclass{exam}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[main=english, vietnamese]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{physics}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tasks}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+
+\tikzstyle{level 1}=[level distance=4cm, sibling distance=4cm]
+\tikzstyle{level 2}=[level distance=5cm, sibling distance=3cm]
+\tikzstyle{end} = [circle, minimum width=5pt,fill, inner sep=0pt]
+
+\definecolor{borderblue}{HTML}{33c2ff}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newbox\mizukibox
+\setbox\mizukibox\hbox{
+\raisebox{-2.5pt}{\includegraphics[height=2.5ex]{mizuki.png}}}
+\def\mizuki{\copy\mizukibox}
+
+\renewcommand\qedsymbol{$\mizuki$}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\curly}[1]{\left\{#1\right\}}
+\newcommand{\lxor}{\oplus}
+\newcommand{\Mid}{\;\middle|\;}
+
+\allowdisplaybreaks
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\makeatletter
+\long\def\paragraph{%
+  \@startsection{paragraph}{4}%
+  {\z@}{2ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\makeatletter
+\def\@xequals@fill{\arrowfill@\Relbar\Relbar\Relbar}
+\newcommand*\xequals[2][]{\DOTSB\ext@arrow0055\@xequals@fill{#1}{#2}}
+\makeatother
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\HGeom}{HGeom}
+\DeclareMathOperator{\NegBin}{NegBin}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator{\Uniform}{Uniform}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Weibull}{Weibull}
+\DeclareMathOperator{\Lognormal}{Lognormal}
+\DeclareMathOperator{\Med}{Med}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+
+\NewTColorBox{problem}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\NewTColorBox{lemma}{m}{
+  standard jigsaw,
+  sharp corners,
+  boxrule=0.4pt,
+  coltitle=black,
+  colframe=black,
+  opacityback=0,
+  opacitybacktitle=0,
+  fonttitle=\normalfont\bfseries\upshape,
+  fontupper=\normalfont,
+  title={Problem #1},
+  after title={.},
+  attach title to upper={\ },
+}
+
+\title{STAT451 - Homework 7}
+\author{\foreignlanguage{vietnamese}{Trần Tôn Minh Kỳ}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}{56a}
+	The accompanying data on crack initiation depth ($\mu$m) was read from a lognormal probability plot that appeared in the article \textbf{``Incorporating Small Fatigue Crack Growth in Probabilistic Life Prediction: Effect of Stress Ratio in Ti-6Al-2Sn-6Mo'' (\textit{Intl. J. of Fatigue}, 2013: 83--95)}. Although the pattern in the plot was quite straight, a normal probability plot of the data also shows a reasonably linear pattern. And a boxplot indicates that the distribution is quite symmetric in the middle 50\% of the data and only mildly skewed overall. It is therefore reasonable to estimate and predict using $t$ intervals.
+	\begin{center}
+		\bgroup
+		\def\arraystretch{1.2}
+		\begin{tabular}{cccccccc}
+			4.7 & 5.1 & 5.2 & 5.3 & 5.6 & 5.8 & 6.3 & 6.7 \\
+			7.2 & 7.4 & 7.7 & 8.5 & 8.9 & 9.3 & 10.1 & 11.2
+		\end{tabular}
+		\egroup
+	\end{center}
+	Estimate the true average crack initiation depth with a 99\% CI and interpret the resulting interval.
+\end{problem}
+
+The sample mean of the data is given by
+\[
+	\overline{x} = \frac{\sum x_i}{n} = 7.1875.
+\]
+The sample variance of the data is given by
+\[
+	s = \sqrt{\frac{\sum (x_i - \overline{x})^2}{n - 1}} \approx 1.9585.
+\]
+We wish to estimate the true mean with a 99\% confidence interval. To this end, we use $\alpha = .01$ and we obtain the critical value $t_{.005, 15} = 2.947$. The resulting interval is thus
+\[
+	7.1875 + 2.947 \times \frac{1.9585}{\sqrt{16}} = (5.7446, 8.6304).
+\]
+\newpage
+\begin{problem}{57}
+	In Example 6.8, we introduced the concept of a censored experiment in which $n$ components are put on test and the experiment terminates as soon as $r$ of the components have failed. Suppose component lifetimes are independent, each having an exponential distribution with parameter $\lambda$. Let $Y_1$ denote the time at which the first failure occurs, $Y_2$ the time at which the second failure occurs, and so on, so that $T_r = Y_1 + \dots + Y_r + (n - r)Y_r$ is the total accumulated at termination. Then it can be shown that $2\lambda T_r$ has a chi-squared distribution with $2r$ df. Use this fact to develop a $100(1 - \alpha)\%$ CI formula for true average lifetime 1/$\lambda$. Compute a $95\%$ CI from the data in Example 6.8.
+\end{problem}
+
+Let $\chi^2_{\alpha/2, v}$ be the $\chi^2$ critical value of the chi-squared distribution with $v$ degrees of freedom. It is readily apparent that
+\[
+	P\paren{\chi^2_{1 - \alpha/2, 2r} < 2\lambda T_r < \chi^2_{\alpha/2, 2r}} = 1 - \alpha.
+\]
+Via minor rearranging, one obtain the $100(1 - \alpha)\%$ confidence interval of $1/\lambda$ to be
+\[
+	\paren{\frac{2(\sum y_i + (n - r)y_r)}{\chi^2_{1 - \alpha/2, 2r}}, \frac{2(\sum y_i + (n - r)y_r)}{\chi^2_{\alpha/2, 2r}}}. \tag{$*$}
+\]
+The relevant data to be calculated is a set of $20$ testing components, where the lifetimes of $r = 10$ of which are
+\begin{center}
+	\bgroup
+	\def\arraystretch{1.2}
+	\begin{tabular}{ccccc}
+		11 & 15 & 29 & 33 & 35 \\
+		40 & 47 & 55 & 58 & 72
+	\end{tabular}.
+	\egroup
+\end{center}
+We wish to compute a $95\%$ confidence interval in view of an estimation of the true average lifetime. With tedious calculations, one obtains that $\sum y_i + (n - r)y_r = 1115$, $\chi^2_{.025, 20} = 34.170$, and $\chi^2_{.975, 20} = 9.591$. Plugging these results to $(*)$, we yield an interval of $(65.2619, 232.5096)$.
+
+\begin{problem}{58}
+	Let $X_1, X_2, \dots, X_n$ be a random sample from a continuous probability distribution having median $\widetilde{\mu}$ (so that $P(X_i \le \widetilde{\mu}) = P(X_i \ge \widetilde{\mu}) = .5$).
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Show that
+		\[
+			P(\min(X_i) < \widetilde{\mu} < \max(X_i)) = 1 - \paren{\frac12}^{n - 1}
+		\]
+		so that $(\min(x_i), \max(x_i))$ is a $100(1 - \alpha)\%$ confidence interval for $\widetilde{\mu}$ with $\alpha = \paren{\frac12}^{n - 1}$.
+		\task For each of six normal male infants, the amount of the amino acid alanine (mg/100 mL) was determined while the infants were on an isoleucine-free diet, resulting in the following data:
+		\begin{center}
+			\bgroup
+			\def\arraystretch{1.5}
+			\begin{tabular}{cccccc}
+				2.84 & 3.54 & 2.80 & 1.44 & 2.94 & 2.70
+			\end{tabular}
+			\egroup
+		\end{center}
+		Conpute a 97\% CI for the true median amount of alanine for infants on such a diet (\textbf{``The Essential Amino Acid Requirements of Infants,'' \textit{Amer. J. of Nutrition}, 1964: 322-330})
+		\task Let $x_{(2)}$ denote the second smallest of the $x_i$'s and $x_{(n - 1)}$ denote the second largest of the $x_i$'s. What is the confidence level of the interval $(x_{(2)}, x_{(n - 1)})$ for $\widetilde{\mu}$?
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.}
+\begin{proof}
+	We proceed by calculating the probability of the complement instead; more specifically, observe that
+	\[
+		P(\min(X_i) < \widetilde{\mu} < \max(X_i)) = 1 - (P(\min(X_i) \ge \widetilde{\mu}) + P(\max(X_i) \le \widetilde{\mu})).
+	\]
+	Because the lower/upper bound on the minimum/maximum implies the lower/upper bound on the whole sample and vice versa, from the above expression we obtain
+	\[
+		1 - (P(\min(X_i) \ge \widetilde{\mu}) + P(\max(X_i) \le \widetilde{\mu})) = 1 - \paren{\prod P(X_i \ge \widetilde{\mu}) + \prod P(X_i \le \widetilde{\mu})} = 1 - \paren{\frac12}^{n - 1}. \qedhere
+	\]
+\end{proof}
+
+\paragraph{b.} With a sample size of $6$, we obtain $\alpha = .03125$ corresponding to an approximately 97\% confidence interval. The resulting interval is thus $(1.44, 3.54)$.
+
+\paragraph{c.} Using the same procedure outlined in \textbf{58a}, we obtain
+\begin{align}
+	P\paren{x_{(2)} < \widetilde{\mu} < x_{(n - 1)}} = 1 - \paren{P(x_{(2)} \ge \widetilde{\mu}) + P(x_{(n - 1)} \le \widetilde{\mu})}.
+\end{align}
+Note that $P(x_{(2)} \ge \widetilde{\mu})$ is calculated as the sum of the probability where none of the $x_i$'s falls below the true median and the probability where precisely one $x_i$ exceeds the true median. Thus one has
+\[
+	P(x_{(2)} \ge \widetilde{\mu}) = \paren{\frac12}^n + \binom n1 \times\frac12\paren{\frac12}^{n - 1} = (n + 1)\paren{\frac12}^n.
+\]
+Similarly, $P(x_{(x - 1)} \le \widetilde{\mu}) = (n + 1)\paren{\frac12}^{n}$. Then
+\[
+	1 - \paren{P(x_{(2)} \ge \widetilde{\mu}) + P(x_{(n - 1)} \le \widetilde{\mu})} = 1 - (n + 1)\paren{\frac12}^n.
+\]
+
+\begin{problem}{59}
+	Let $X_1, X_2, \dots, X_n$ be a random sample from a uniform distribution on the interval $[0, \theta]$, so that
+	\[
+		f(x) = \begin{cases}
+			\displaystyle \frac1\theta & 0 \le x \le \theta \\
+			0 & \text{otherwise}
+		\end{cases}
+	\]
+	Then if $Y = \max(X_i)$, it can be shown that the rv $U = Y/\theta$ has density function
+	\[
+		f_U(u) = \begin{cases}
+			nu^{n - 1} & 0 \le u \le 1 \\
+			0 & \text{otherwise}
+		\end{cases}
+	\]
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Use $f_U(u)$ to verify that
+		\[
+			P\paren{(\alpha/2)^{1/n} < \frac{Y}{\theta} \le (1 - \alpha/2)^{1/n}} = 1 - \alpha
+		\]
+		and use this to derive a $100(1 - \alpha)\%$ CI for $\theta$.
+		\task Verify that $P(\alpha^{1/n} \le Y/\theta \le 1) = 1 - \alpha$, and derive a $100(1 - \alpha)\%$ CI for $\theta$ based on this probability statement.
+		\task Which of the two intervals derived previously is shorter? If my waiting time for a morning bus is uniformly distributed and observed waiting times are $x_1 = 4.2$, $x_2 = 3.5$, $x_3 = 1.7$, $x_4 = 1.2$, and $x_5 = 2.4$, derive a $95\%$ CI for $\theta$ by using the shorter of the two intervals.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} Integrating $U$ using the given bounds, we yield
+\[
+	\int_{(\alpha/2)^{1/n}}^{(1 - \alpha/2)^{1/n}} nu^{n - 1}\dd u = \eval{u^n}_{u = (\alpha/2)^{1/n}}^{u = (1 - \alpha/2)^{1/n}} = 1 - \alpha.
+\]
+The derivation of a $100(1 - \alpha)\%$ confidence interval for $\theta$ is also readily apparent:
+\begin{align*}
+	P\paren{(\alpha/2)^{1/n} < \frac{Y}{\theta} < (1 - \alpha/2)^{1/n}} &= P\paren{\frac1{(1 - \alpha/2)^{1/n}} < \frac{\theta}{Y} < \frac1{(\alpha/2)^{1/n}}} \\
+	&= P\paren{\frac{\max(x_i)}{(1 - \alpha/2)^{1/n}} < \theta < \frac{\max(x_i)}{(\alpha/2)^{1/n}}} \\
+	&= 1 - \alpha.
+\end{align*}
+The $100(1 - \alpha)\%$ confidence interval for $\theta$'s final form is thus
+\[
+	\paren{\frac{\max(x_i)}{(1 - \alpha/2)^{1/n}}, \frac{\max(x_i)}{(\alpha/2)^{1/n}}}.
+\]
+
+\paragraph{b.} Integrating $U$ using the given bounds, we yield
+\[
+	\int_{\alpha^{1/n}}^1 nu^{n - 1}\dd u = \eval{u^n}_{\alpha^{1/n}}^1 = 1 - \alpha.
+\]
+The derivation of a $100(1 - \alpha)\%$ confidence interval for $\theta$ is also readily apparent:
+\begin{align*}
+	P\paren{\alpha^{1/n} < \frac{Y}\theta < 1} = P\paren{1 < \frac{\theta}{Y} < \frac1{\alpha^{1/n}}} = P\paren{\max(x_i) < \theta < \frac{\max(x_i)}{\alpha^{1/n}}} = 1 - \alpha.
+\end{align*}
+The $100(1 - \alpha)\%$ confidence interval for $\theta$'s final form is thus
+\[
+	\paren{\max(x_i), \frac{\max(x_i)}{\alpha^{1/n}}}.
+\]
+
+\paragraph{c.} It can be seen that the interval delineated in \textbf{59b} is the rightmost area under the curve of $f_U(u)$. Because $f_U(u)$ monotonically increases for positive density area, one can conclude the confidence interval in \textbf{59b} provides a more precise estimation than the interval in \textbf{59a} for the same confidence level. Using the relevant data, the 95\% confidence interval for $\theta$ is given by $\paren{4.2, \frac{4.2}{.05^{1/5}}} = (4.2, 7.6464)$.
+
+\begin{problem}{60}
+	Let $0 \le \gamma \le \alpha$. Then a $100(1 - \alpha)\%$ CI for $\mu$ when $n$ is large is
+	\[
+		\paren{\overline{x} - z_{\gamma} \times \frac{s}{\sqrt{n}}, \overline{x} + z_{\alpha - \gamma} \times \frac{s}{\sqrt{n}}}
+	\]
+	The choice $\gamma = \alpha/2$ yields the usual interval derived in Section 7.2; if $\gamma \neq \alpha/2$, this interval is not symmetric about $\overline{x}$. The width of this interval is $w = s(z_{\gamma} + z_{\alpha - \gamma})/\sqrt{n}$. Show that $w$ is minimized for the choice $\gamma = \alpha/2$, so that the symmetric interval is the shortest.
+\end{problem}
+\begin{proof}
+	By definition, $z_\alpha = \Phi^{-1}(1 - \alpha)$. Using this, we can rewrite $w$ as the following:
+	\[
+		w = \frac{s}{\sqrt{n}}(\Phi^{-1}(1 - \gamma) + \Phi^{-1}(1 - \alpha + \gamma)).
+	\]
+	Taking the derivative with respect to $\gamma$, we obtain
+	\[
+		\frac{\dd}{\dd\gamma}w = \frac{s}{\sqrt{n}}\paren{\frac{1}{\Phi'(1 - \alpha + \gamma)} - \frac1{\Phi'(1 - \gamma)}} = \frac{s}{\sqrt{n}}\paren{\frac{\sqrt{2\pi}}{\exp(-(1 - \alpha + \gamma)^2/2)} + \frac{\sqrt{2\pi}}{\exp(-(1 - \gamma)^2/2)}}.
+	\]
+	Setting the derivative to zero and following the barrage of simplification, we obtain
+	\[
+		\abs{1 - \alpha + \gamma} = \abs{1 - \gamma},
+	\]
+	whose solution is $\gamma = \frac\alpha2$. This is therefore the only extremum---and in fact, minimum---of $w$.
+\end{proof}
+
+\begin{problem}{61}
+	Suppose $x_1, x_2, \dots, x_n$ are observed values resulting from a random sample from a symmetric but possibly heavy-tailed distribution. Let $\widetilde{x}$ and $f_s$ denote the sample median and fourth spread, respectively. Chapter 11 of \textit{Understanding Robust and Exploratory Data Analysis} suggests the following robust $95\%$ CI for the population mean (point of symmetry):
+	\[
+		\widetilde{x} \pm \paren{\frac{\text{conservative $t$ critical value}}{1.075}} \times \frac{f_s}{\sqrt{n}}
+	\]
+	The value of the quantity in parentheses is 2.10 for $n = 10$, $1.94$ for $n = 20$, and $1.91$ for $n = 30$. Compute this CI for the data of Exercise 45, and compare to the $t$ CI appropriate for a normal population distribution.
+\end{problem}
+
+The relevant data is the fracture toughness of a base plate of $18\%$ nickel maraging steel measured in ksi$\sqrt{\text{in}}$ whose observed data is given by
+\begin{center}
+	\bgroup
+	\def\arraystretch{1.5}
+	\begin{tabular}{cccccccc}
+		69.5 & 71.9 & 72.6 & 73.1 & 73.3 & 73.5 & 75.5 & 75.7 \\
+		75.8 & 76.1 & 76.2 & 76.2 & 77.0 & 77.9 & 78.1 & 79.6 \\
+		79.7 & 79.9 & 80.1 & 82.2 & 83.7 & 93.7
+	\end{tabular}.
+	\egroup
+\end{center}
+It is readily apparent that $\widetilde{x} = 76.2$ and $f_s = 6.2$. Using the value 1.94 as the value of the parentheses of this problem's formula, we obtain the 95\% confidence interval estimating the true mean $(73.6356, 78.7644)$.
+
+We now compute the same $95\%$ confidence interval using $t$ distribution instead. Using $\alpha = .05$, we obtain the critical value $t_{.025, 21} = 2.080$. The mean and standard deviation are also given by $\overline{x} = 77.3318$ and $s = 5.0367$, respectively. The acquisition of the $95\%$ confidence interval estimating the true mean is imminent---$(75.0982, 79.5654)$.
+
+The precision of the latter interval is slightly higher than the former. However, the former is more immune to outliers than the latter, as shown by the 93.7 outlier swaying the latter interval rightwards.
+
+\begin{problem}{62}
+	\begin{tasks}[label=\textbf{\alph*.}]
+		\task Use the results of Example 7.5 to obtain a 95\% lower confidence bound for the parameter $\lambda$ of an exponential distribution, and calculate the bound based on the data given in the example.
+		\task If lifetime $X$ has an exponential distribution, the probability that lifetime exceeds $t$ is $P(X > t) = e^{-\lambda t}$. Use the result of part (a) to obtain a 95\% lower confidence bound for the probability that breakdown time exceeds 100 min.
+	\end{tasks}
+\end{problem}
+
+\paragraph{a.} The 95\% lower confidence bound of $\lambda$ can be calculated as 
+\[
+	\frac{\chi^2_{.95, 2v}}{2\sum X_i}.
+\]
+Substituting the relevant data, we obtain $\chi^2_{.95, 20} = 10.851$ and $\sum x_i = 550.87$, outputing our desired lower confidence bound .0098.
+
+\paragraph{b.} As derived in \textbf{62a},
+\[
+	P\paren{\lambda < \frac{\chi^2_{.95, 2v}}{2\sum X_i}} = .95.
+\]
+With minor rearranging to transform $\lambda$ to $e^{-\lambda t}$, one obtains
+\[
+	P\paren{e^{-\lambda t} < \exp\paren{-\frac{t\chi^2_{.95, 2v}}{2\sum X_i}}} = .95.
+\]
+Substiting the relevant data, we obtains $.0578$ for the right hand side of the inequality, corresponding to the $95\%$ lower confidence bound we desire.
+
+\end{document}
