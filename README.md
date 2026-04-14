@@ -1,4 +1,4 @@
-# Materials for Statistics 1 course
-![alt](niigo.png)
+# APCS k24 STAT451 (Applied Statistics for Scientists and Engineers) Slides and Labs
+pretty good for the first half semester, inferential stats kinda sucks
 
-For reference purpose only. I don't give a shit nor take responsibility if you get caught copying solutions online and claim it as yours.
+![alt](niigo.png)
